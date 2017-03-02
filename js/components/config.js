@@ -1,1 +1,0 @@
-annyang.setLanguage('fr-FR');

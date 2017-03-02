@@ -1,25 +1,18 @@
-import commandController from "../../core/commands/commandController"
-import ConjugatorConfig from "./conjugator.config"
+import moduleController from "../../core/modules/moduleController"
 import Jeeves from "../../core/bot/jeeves"
 
-export default class Conjugator extends commandController {
+export default class Conjugator extends moduleController {
     constructor() {
         super()
-            .setCommand('Conjugator')
-            .setRegexp([
-                ConjugatorConfig.behavior.conjuger.action
-            ])
-            .setCallback((...args) => this.conjugatorController.apply(this, args))
+
+        // Methods
+        this.conjugerAction()
     }
 
-    conjugatorController() {
-        let behavior = ConjugatorConfig.behavior,
-            phrase = super.getPhrase(arguments)
-
-        Jeeves.iSay(phrase)
-
-        Jeeves.whenMatch(behavior.conjuger.action, () => {
-            Jeeves.reply(behavior.salutation.reply)
+    conjugerAction() {
+        this.whenMatch('conjuguer :verb au :time', (speak) => {
+            // Jeeves.reply('Quel verbe voulez-vous conjuger ?')
+            debugger
             Jeeves.waitMyReply().then(...args => {
                 debugger
             })

@@ -40,15 +40,6 @@ export default class verb {
         }
     }
 
-    getIsConjugated() {
-        return this.isConjugated
-    }
-
-    setIsConjugated(value) {
-        this.isConjugated = value
-        return this
-    }
-
     getConjugatedVerb() {
         if(this.conjugatedVerb === null) {
             // On récupère les terminaisons des temps présent, imparfait & futur
@@ -81,6 +72,15 @@ export default class verb {
 
     setConjugatedVerb(value) {
         this.conjugatedVerb = value
+        return this
+    }
+
+    getIsConjugated() {
+        return this.isConjugated
+    }
+
+    setIsConjugated(value) {
+        this.isConjugated = value
         return this
     }
 

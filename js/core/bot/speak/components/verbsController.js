@@ -31,16 +31,27 @@ export default class verbsController {
 
             for(let categoryName in conjugatedTimes) { // indicatif...
                 for(let timeName in conjugatedTimes[categoryName]) { // present, future...
+
+                    // conjugatedTimes[categoryName][timeName].find(verbConjugated => {
+                    //     if(verbConjugated === verbToFind) {
+                    //         // Le verbe a été trouvé, on le renvoie directement
+                    //         verbConjugated.setIsConjugated({
+                    //             categoryName,
+                    //             timeName
+                    //         })
+                    //         return verbConjugated
+                    //     }
+                    // })
                     for(let i = 0; i < conjugatedTimes[categoryName][timeName].length; i++) { // iront...
                         let verbConjugated = conjugatedTimes[categoryName][timeName][i]
 
                         if(verbConjugated === verbToFind) {
-                            // Le verbe a été trouvé, on le renvoie directement
-                            verbConjugated.setIsConjugated({
+                            // Le verbe a été trouvé
+                            let verbFinded = verb.setIsConjugated({
                                 categoryName,
                                 timeName
                             })
-                            return verbConjugated
+                            return verbFinded
                         }
                     }
                 }
@@ -50,8 +61,11 @@ export default class verbsController {
 
         // Find in verbs auxiliaires
         let verbsAuxiliaires = this.getVerbsAuxiliaires()
-        for(let key in verbsAuxiliaires) {
-            return findVerbWithConjugations(verbsAuxiliaires[key])
+        for(let verbAuxiliaire of verbsAuxiliaires) {
+            let verbIsFinded = findVerbWithConjugations(verbAuxiliaire)
+            if(verbIsFinded) {
+                return verbIsFinded
+            }
         }
 
         // Find in list of verbs
@@ -66,8 +80,11 @@ export default class verbsController {
         })
 
         // On va rechercher le verbe en essayant de conjuger ce dernier avec les terminaisons des verbes filtrés
-        for(let key in verbsFilteredByRadical) {
-            return findVerbWithConjugations(verbsFilteredByRadical[key])
+        for(let verbFilteredByRadical of verbsFilteredByRadical) {
+            let verbIsFinded = findVerbWithConjugations(verbFilteredByRadical)
+            if(verbIsFinded) {
+                return verbIsFinded
+            }
         }
 
         return false

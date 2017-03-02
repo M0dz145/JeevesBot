@@ -1,13 +1,15 @@
-var gulp       = require('gulp'),
-    sourcemaps = require('gulp-sourcemaps'),
-    size       = require('gulp-size'),
-    livereload = require('gulp-livereload'),
-    source     = require('vinyl-source-stream'),
-    buffer     = require('vinyl-buffer'),
-    browserify = require('browserify'),
-    watchify   = require('watchify'),
-    babel      = require('babelify'),
-    moment     = require('moment');
+var gulp         = require('gulp'),
+    sass         = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    sourcemaps   = require('gulp-sourcemaps'),
+    size         = require('gulp-size'),
+    livereload   = require('gulp-livereload'),
+    source       = require('vinyl-source-stream'),
+    buffer       = require('vinyl-buffer'),
+    browserify   = require('browserify'),
+    watchify     = require('watchify'),
+    babel        = require('babelify'),
+    moment       = require('moment');
 
 function compile(watch) {
     var bundler = browserify('./js/app.js', {
@@ -39,10 +41,6 @@ function compile(watch) {
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(sourcemaps.write('./'))
             .pipe(size())
-            .on('end', function() {
-                console.timeEnd('timer');
-                console.log('Build finished');
-            })
             .pipe(gulp.dest('./build'))
             .pipe(livereload());
     }
@@ -55,13 +53,22 @@ function compile(watch) {
 }
 
 gulp.task('build', function() {
-    livereload.listen()
     return compile(true);
 });
 
-gulp.task('watch', function() {
-    gulp.start('build')
-    // gulp.watch('./js/**/*.js', ['build'])
+gulp.task('scss', function() {
+    return gulp.src('./css/app.scss')
+        .pipe(sass({
+            errLogToConsole: true
+        }).on('error', sass.logError))
+        .pipe(size())
+        .pipe(gulp.dest('./build'))
+        .pipe(livereload());
 });
 
-gulp.task('default', ['watch']);
+gulp.task('watch', function() {
+    livereload.listen()
+    gulp.watch('./css/**/*.scss', ['scss'])
+});
+
+gulp.task('default', ['build', 'scss', 'watch']);

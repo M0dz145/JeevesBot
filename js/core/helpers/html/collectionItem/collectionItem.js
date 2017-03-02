@@ -9,9 +9,8 @@ export default class CollectionItemController {
 
         this.id = Uniqid()
         this.html = `
-            <li id="` + this.id + `" class="collection-item">
-                <strong class="materialize-red-text">` + this.replace.title + `</strong><br>
-                <span class="blue-grey-text">` + this.replace.text + `</span>
+            <li id="${this.id}" class="card-panel teal">
+                <span class="white-text">${this.replace.text}</span>
             </li>
         `;
     }

@@ -1,8 +1,7 @@
-import Humanize from "../../helpers/humanize/humanize"
 import {SPEAK} from "../../constants/constants"
 import verbsController from "./components/verbsController"
 
-export default class speakController {
+export default class speak {
     constructor(speak) {
         this.speak = speak
 
@@ -11,6 +10,9 @@ export default class speakController {
         this.isVouvoiement = null
 
         this.isAction = null
+        this.verbs = []
+
+        /** https://fr.wikipedia.org/wiki/QQOQCCP */
 
         this.init()
     }
@@ -22,17 +24,12 @@ export default class speakController {
 
         this.setIsAction(SPEAK.ACTION_VERB.test(this.getSpeak()))
 
-        if(this.getIsAction()) {
-            this.getSpeak().replace(SPEAK.ACTION_VERB, (match, $verb) => {
-                let verb = verbsController.find($verb)
-                debugger
-            })
-        } else {
-            this.getIsAction().replace(SPEAK.VERB, (match, $verb) => {
-                let verb = verbsController.find($verb)
-                debugger
-            })
-        }
+        let speakVerbRegex = this.getIsAction() ? SPEAK.ACTION_VERB : SPEAK.VERB
+        this.getSpeak().replace(speakVerbRegex, (match, $verb) => {
+            let verb = verbsController.find($verb)
+            debugger
+            this.getVerbs().push(verb)
+        })
     }
 
     transform(tutoiement) {
@@ -42,6 +39,10 @@ export default class speakController {
         } else if(!tutoiement && !this.getIsVouvoiement()) {
 
         }
+    }
+
+    getVerbs() {
+        return this.verbs
     }
 
     getIsAction() {

@@ -1,13 +1,22 @@
-import Ang from "./core/ang"
 import Hello from './components/hello/hello.controller'
-import Conjugator from "./components/conjugator/conjugator.controller";
+import Conjugator from "./components/conjugator/conjugator.controller"
+import recognizer from "./core/bot/speak/recognizer"
+import commandsRouter from "./core/modules/moduleRouter"
 
-Ang.init()
+let Recognizer = new recognizer()
 
-Ang.addCommanders([
-    new Conjugator,
-    new Hello
+Recognizer.setLanguage('fr-FR')
+Recognizer.init()
+
+commandsRouter.addModules([
+    new Conjugator//,
+    // new Hello
 ])
 
+// Recognizer.addCommanders([
+//     new Conjugator//,
+//     //new Hello
+// ])
+
 // Start listening.
-Ang.start()
+Recognizer.start()

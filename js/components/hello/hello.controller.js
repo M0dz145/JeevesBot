@@ -1,21 +1,23 @@
-import commandController from "../../core/commands/commandController"
+import moduleController from "../../core/modules/moduleController"
 import HelloConfig from "./hello.config"
 import Jeeves from "../../core/bot/jeeves"
 
-export default class Hello extends commandController {
+export default class Hello extends moduleController {
     constructor() {
         super()
-            .setCommand('Hello')
-            .setRegexp([
+            .setName('Hello')
+            .setElementsToMatch([
                 HelloConfig.behavior.commentVas.regexp,
                 HelloConfig.behavior.salutation.regexp
             ])
-            .setCallback((...args) => this.helloController.apply(this, args))
+            .setController((...args) => this.helloController.apply(this, args))
     }
 
     helloController() {
         let behavior = HelloConfig.behavior,
             phrase = super.getPhrase(arguments)
+
+        debugger
 
         Jeeves.iSay(phrase)
 
@@ -23,9 +25,9 @@ export default class Hello extends commandController {
 
         Jeeves.whenMatch(behavior.commentVas.regexp, () => {
             Jeeves.reply(behavior.commentVas.reply)
-            Jeeves.waitISay((response) => { //ex: Je vais très bien
-                Jeeves.reply('Cool ta vie man ;)')
-            })
+            // Jeeves.waitISay((response) => { //ex: Je vais très bien
+            //     Jeeves.reply('Cool ta vie man ;)')
+            // })
         })
     }
 
