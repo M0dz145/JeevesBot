@@ -14,21 +14,21 @@ export default class RegexpGenerator {
 
     static textToRegex(text) {
         // The command matching code is a modified version of Backbone.Router by Jeremy Ashkenas, under the MIT license.
-        let optionalParam = /\s*\((.*?)\)\s*/g,
-            optionalRegex = /(\(\?:[^)]+\))\?/g,
-            splatParam    = /\*\w+/g,
-            escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#]/g
+        // let optionalParam = /\s*\((.*?)\)\s*/g,
+        //     optionalRegex = /(\(\?:[^)]+\))\?/g,
+        //     splatParam    = /\*\w+/g,
+        //     escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#]/g
 
         text = text
-            .replace(escapeRegExp, '\\$&')
-            .replace(optionalParam, '(?:$1)?')
-            .replace(REGEXP_COLLECTION.NAMED_PARAMETER, function(match, optional) {
+            // .replace(escapeRegExp, '\\$&')
+            // .replace(optionalParam, '(?:$1)?')
+            .replace(REGEXP_COLLECTION.NAMED_PARAMETER, (match, optional) => {
                 return optional ? match : '([^\\s]+)'
             })
-            .replace(splatParam, '(.*?)')
-            .replace(optionalRegex, '\\s*$1?\\s*')
+            // .replace(splatParam, '(.*?)')
+            // .replace(optionalRegex, '\\s*$1?\\s*')
 
-        return new RegExp('^' + text + '$', 'i')
+        return new RegExp(text, 'gi')
     }
 
     setFlags() {

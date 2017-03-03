@@ -1,3 +1,6 @@
+import {REGEXP_COLLECTION} from "../constants/constants"
+import verbsController from "../bot/speak/components/verbsController"
+
 export default class moduleController {
     constructor() {
         this.name = null
@@ -11,6 +14,29 @@ export default class moduleController {
         this.setName(this.constructor.name)
 
         return this
+    }
+
+    static parseMatch(string) {
+        let parameters = {}
+
+        string
+            .replace(REGEXP_COLLECTION.TYPED_PARAMETER, (match, type, parameter, offset, other) => {
+                debugger
+                switch(type) {
+                    case 'verb':
+                        let verbFinded = verbsController.findByName(parameter)
+                        if(verbFinded) {
+                            parameters.verb = verbFinded
+                        }
+                        break
+                }
+            })
+            .replace(REGEXP_COLLECTION.NAMED_PARAMETER, (match, optional) => {
+                return optional ? match : '([^\\s]+)'
+            })
+
+        debugger
+
     }
 
     whenMatch(match, callback) {

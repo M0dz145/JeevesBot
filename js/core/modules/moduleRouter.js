@@ -34,7 +34,7 @@ class moduleRouter {
                         //     parameters.push(params[1])
                         // }
 
-                        let parameters = RegexpGenerator.textToRegex(module.getElementsToMatch()[j])
+                        let parameters = Object.getPrototypeOf(module).constructor.parseMatch(module.getElementsToMatch()[j])
 
                         debugger
                         logger

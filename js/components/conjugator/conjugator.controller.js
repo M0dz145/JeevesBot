@@ -10,7 +10,7 @@ export default class Conjugator extends moduleController {
     }
 
     conjugerAction() {
-        this.whenMatch('conjuguer :verb au :time', (speak) => {
+        this.whenMatch('verb$conjuguer :verb au :time', (speak) => {
             // Jeeves.reply('Quel verbe voulez-vous conjuger ?')
             debugger
             Jeeves.waitMyReply().then(...args => {

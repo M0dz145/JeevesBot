@@ -14,6 +14,18 @@ export default class verbsController {
     }
 
     /**
+     * Permet de rechercher un verbe depuis son nom (ex : conjuger)
+     *
+     * @param verbName
+     * @returns {*|T|{}}
+     */
+    static findByName(verbName) {
+        return VERBS_LIST.find(verb => {
+            return verb.getVerbName() === verbName
+        })
+    }
+
+    /**
      * Permet de rechercher un verbe depuis n'importe quel verbe conjugé
      *
      * @param verbToFind

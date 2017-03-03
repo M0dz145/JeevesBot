@@ -12,7 +12,19 @@ export default class speak {
         this.isAction = null
         this.verbs = []
 
-        /** https://fr.wikipedia.org/wiki/QQOQCCP */
+        this.circumstantialComplement = {
+            place: [],
+            way: [],
+            time: []
+        }
+
+        /**
+         * Qui ? Quoi ? Où ? Quand ? Comment ? Combien ? Pourquoi ? :
+         * https://fr.wikipedia.org/wiki/QQOQCCP
+         *
+         * Compléments circonstanciels :
+         * https://fr.wikipedia.org/wiki/Compl%C3%A9ment_circonstanciel
+         */
 
         this.init()
     }
@@ -30,6 +42,22 @@ export default class speak {
             debugger
             this.getVerbs().push(verb)
         })
+
+        // Recherche les compléments circonstanciels de lieu, manière et temps
+        let circumstantialComplement
+        while((circumstantialComplement = SPEAK.CIRCUMSTANTIAL_COMPLEMENT.REGEXP.exec(this.getSpeak())) !== null) {
+            let $place = circumstantialComplement[SPEAK.CIRCUMSTANTIAL_COMPLEMENT.INDEX_PARAMS.PLACE],
+                $way = circumstantialComplement[SPEAK.CIRCUMSTANTIAL_COMPLEMENT.INDEX_PARAMS.WAY],
+                $time = circumstantialComplement[SPEAK.CIRCUMSTANTIAL_COMPLEMENT.INDEX_PARAMS.TIME]
+
+            if($place) {
+                this.getCircumstantialComplement().place.push($place)
+            } else if($way) {
+                this.getCircumstantialComplement().way.push($way)
+            } else if($time) {
+                this.getCircumstantialComplement().time.push($time)
+            }
+        }
     }
 
     transform(tutoiement) {
@@ -39,6 +67,10 @@ export default class speak {
         } else if(!tutoiement && !this.getIsVouvoiement()) {
 
         }
+    }
+
+    getCircumstantialComplement() {
+        return this.circumstantialComplement
     }
 
     getVerbs() {
