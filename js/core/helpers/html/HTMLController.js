@@ -5,11 +5,11 @@ export default class HTMLController {
         this.app = $('#app')
     }
 
-    addCollectionItem(title, text) {
+    addCollectionItem(text, color) {
         this.collectionItem = new CollectionItemController
         this.collectionItem
-            .setItemTitle(title)
             .setItemText(text)
+            .setItemColor(color ? color : 'teal')
 
         this.app.append(this.collectionItem.getHTML())
         return this.collectionItem

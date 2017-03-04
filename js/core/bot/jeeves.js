@@ -8,13 +8,6 @@ class Jeeves {
 
         this.isWaitReply = false
     }
-
-    iSay(text) {
-        // let speakCtrl = new speakController(text)
-        this.say = Humanize.replyFormat(text)
-
-        return this
-    }
     
     getIsWaitReply() {
         return this.isWaitReply
@@ -32,13 +25,8 @@ class Jeeves {
     }
 
     reply(reply) {
-        this.HTMLController.addCollectionItem(this.getISay(), this.chooseReply(reply))
+        this.HTMLController.addCollectionItem(reply, 'light-blue')
         return this
-    }
-
-    chooseReply(replys) {
-        let replySelected = replys[Math.floor(Math.random() * replys.length)]
-        return replySelected
     }
 }
 

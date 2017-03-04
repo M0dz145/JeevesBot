@@ -4,12 +4,13 @@ export default class CollectionItemController {
     constructor() {
         this.replace = {
             title: '$TITLE$',
-            text: '$TEXT$'
+            text: '$TEXT$',
+            color: '$COLOR$'
         }
 
         this.id = Uniqid()
         this.html = `
-            <li id="${this.id}" class="card-panel teal">
+            <li id="${this.id}" class="card-panel ${this.replace.color}">
                 <span class="white-text">${this.replace.text}</span>
             </li>
         `;
@@ -26,6 +27,11 @@ export default class CollectionItemController {
 
     setItemText(text) {
         this.setHTML(this.getHTML().replace(this.replace.text, text))
+        return this
+    }
+
+    setItemColor(color) {
+        this.setHTML(this.getHTML().replace(this.replace.color, color))
         return this
     }
 

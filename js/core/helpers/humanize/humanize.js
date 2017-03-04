@@ -1,16 +1,4 @@
 export default class Humanize {
-
-    static replyFormat(text) {
-        if(this.isQuestion(text)) {
-            text += ' ?'
-        } else {
-            text += '.'
-        }
-
-        return this.capitalize(text)
-    }
-
-
     // Converts a large integer to a friendly text representation.
     static intword(number, charWidth, decimals = 2) {
         /*

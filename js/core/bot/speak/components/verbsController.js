@@ -32,6 +32,7 @@ export default class verbsController {
      * @returns {*}
      */
     static find(verbToFind) {
+        verbToFind = verbToFind.toLowerCase()
         /**
          * Recherche un verbe en essayant de conjuger ce dernier avec les terminaisons des verbes filtrés
          *
