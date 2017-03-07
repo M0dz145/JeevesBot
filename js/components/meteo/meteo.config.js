@@ -1,5 +1,4 @@
 import commandController from "../../core/modules/moduleController"
-import HTMLController from "../../core/helpers/html/HTMLController"
 
 export default class Hello extends commandController {
     constructor() {

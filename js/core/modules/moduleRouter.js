@@ -1,7 +1,5 @@
 import logger from "../helpers/console/logger"
 import Jeeves from "../bot/jeeves"
-import {REGEXP_COLLECTION} from "../constants/constants"
-import RegexpGenerator from "../helpers/generator/RegexpGenerator"
 
 class moduleRouter {
     constructor() {
@@ -15,59 +13,67 @@ class moduleRouter {
      * @returns {boolean}
      */
     matchModule(speak) {
+        if(this.getModulesList().length === 0) {
+            throw 'Aucun module à chercher'
+        }
+
         if(Jeeves.getIsWaitReply()) {
 
         }
 
-        let i            = 0,
-            moduleFinded = null
+        let pointModule = []
 
-        while(moduleFinded === null && i < this.getModulesList().length) {
+        for(let i = 0; i < this.getModulesList().length; i++) {
             let module = this.getModulesList()[i]
+            pointModule[i] = 0
 
-            for(let verb of speak.getVerbs()) {
-                for(let j = 0; j < module.getElementsToMatch().length; j++) {
-                    if(module.getElementsToMatch()[j].includes(verb.getVerbName())) {
-                        // let params,
-                        //     parameters = []
-                        // while((params = REGEXP_COLLECTION.PARAMETERS.exec(module.getElementsToMatch()[j])) !== null) {
-                        //     parameters.push(params[1])
-                        // }
-
-                        let parameters = Object.getPrototypeOf(module).constructor.parseMatch(module.getElementsToMatch()[j])
-
-                        debugger
-                        logger
-                            .message('Module matched: %c' + module.getName())
-                            .message('With matcher module: %c' + module.getElementsToMatch()[j])
-
-                        module.getCallbacks()[j].apply(module, [speak])
-                        return moduleFinded = true
+            let matchElement = (element) => {
+                // Match with verb
+                for(let verbMatcher of element.getVerbs()) {
+                    for(let verbSpeak of speak.getVerbs()) {
+                        if(verbMatcher.getVerbName() === verbSpeak.getVerbName()) {
+                            pointModule[i]++
+                        }
                     }
                 }
+
+
+
             }
 
-            i++
+            for(let j = 0; j < module.getElementsToMatch().length; j++) {
+                let elementToMatch = module.getElementsToMatch()[j]
+
+                if(Array.isArray(elementToMatch)) {
+                    elementToMatch.forEach(element => {
+                        matchElement(element)
+                    })
+                } else {
+                    matchElement(elementToMatch)
+                }
+
+            }
         }
 
-        return false
+        let maxPoint = Array.max(pointModule)
 
-        // // try and match recognized text to one of the commands on the list
-        // for(var j = 0, l = this.getModulesList().length; j < l; j++) {
-        //     var currentCommand = this.getModulesList()[j]
-        //     var result = currentCommand.module.exec(commandText)
-        //     if(result) {
-        //         var parameters = result.slice(1)
-        //         logger.message('module matched: %c' + currentCommand.originalPhrase)
-        //         if(parameters.length) {
-        //             logger.message('with parameters', parameters)
-        //         }
-        //         // execute the matched module
-        //         // currentCommand.callback.apply(this, parameters)
-        //         // invokeCallbacks(callbacks.resultMatch, commandText, currentCommand.originalPhrase, results)
-        //         return true
-        //     }
-        // }
+        if(maxPoint === 0) {
+            // No modules match
+            return logger.message('%cNo modules matched')
+        }
+
+        let indexModule = Array.indexOfMax(pointModule),
+            module      = this.getModulesList()[indexModule]
+
+        logger
+            .message('Module matched: %c' + module.getName())
+            .message('With %c' + maxPoint + ' points')
+
+        debugger
+
+        module.getCallbacks()[indexModule].apply(module, [speak])
+
+        return false
     }
 
     getModuleByName(moduleName) {

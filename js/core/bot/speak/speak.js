@@ -24,6 +24,9 @@ export default class speak {
          *
          * Compléments circonstanciels :
          * https://fr.wikipedia.org/wiki/Compl%C3%A9ment_circonstanciel
+         *
+         * Language tool API:
+         * https://languagetool.org/http-api/swagger-ui/
          */
 
         this.init()
@@ -39,8 +42,9 @@ export default class speak {
         let speakVerbRegex = this.getIsAction() ? SPEAK.ACTION_VERB : SPEAK.VERB
         this.getSpeak().replace(speakVerbRegex, (match, $verb) => {
             let verb = verbsController.find($verb)
-            debugger
-            this.getVerbs().push(verb)
+            if(verb) {
+                this.getVerbs().push(verb)
+            }
         })
 
         // Recherche les compléments circonstanciels de lieu, manière et temps

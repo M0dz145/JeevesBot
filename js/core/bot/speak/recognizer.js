@@ -1,8 +1,8 @@
 import speak from "./speak"
 import moduleRouter from "../../modules/moduleRouter"
 import logger from "../../helpers/console/logger"
-import HTMLController from "../../helpers/html/HTMLController"
-import Humanize from "../../helpers/humanize/humanize"
+import bubbles from "../../helpers/console/bubbles"
+import {BUBBLE_CONFIG} from "../../constants/constants"
 
 export default class recognizer {
     constructor() {
@@ -150,7 +150,7 @@ export default class recognizer {
                 logger.message('Speech recognized: %c' + transcript)
 
                 if(moduleRouter.matchModule(new speak(transcript)) || result.isFinal) {
-                    new HTMLController().addCollectionItem(transcript)
+                    new bubbles(BUBBLE_CONFIG, transcript)
                     return this.abort()
                 }
             }

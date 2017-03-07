@@ -1,5 +1,6 @@
 import {REGEXP_COLLECTION} from "../constants/constants"
 import verbsController from "../bot/speak/components/verbsController"
+import elementMatcher from "../bot/behavior/elementMatcher"
 
 export default class moduleController {
     constructor() {
@@ -40,7 +41,7 @@ export default class moduleController {
     }
 
     whenMatch(match, callback) {
-        this.getElementsToMatch().push(match)
+        this.getElementsToMatch().push(new elementMatcher(match))
         this.getCallbacks().push(callback)
 
         return this

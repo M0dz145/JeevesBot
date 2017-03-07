@@ -1,9 +1,9 @@
-import HTMLController from "../helpers/html/HTMLController"
 import Humanize from "../helpers/humanize/humanize"
+import bubbles from "../helpers/console/bubbles"
+import {BUBBLE_CONFIG} from "../constants/constants"
 
 class Jeeves {
     constructor() {
-        this.HTMLController = new HTMLController()
         this.behaviors = []
 
         this.isWaitReply = false
@@ -25,7 +25,7 @@ class Jeeves {
     }
 
     reply(reply) {
-        this.HTMLController.addCollectionItem(reply, 'light-blue')
+        new bubbles(BUBBLE_CONFIG.JEEVES, reply)
         return this
     }
 }

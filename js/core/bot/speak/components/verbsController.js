@@ -20,6 +20,9 @@ export default class verbsController {
      * @returns {*|T|{}}
      */
     static findByName(verbName) {
+        if(typeof verbName !== 'string') {
+            throw '"verbName" doit être un string'
+        }
         return VERBS_LIST.find(verb => {
             return verb.getVerbName() === verbName
         })
