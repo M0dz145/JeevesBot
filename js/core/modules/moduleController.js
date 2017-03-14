@@ -17,29 +17,6 @@ export default class moduleController {
         return this
     }
 
-    static parseMatch(string) {
-        let parameters = {}
-
-        string
-            .replace(REGEXP_COLLECTION.TYPED_PARAMETER, (match, type, parameter, offset, other) => {
-                debugger
-                switch(type) {
-                    case 'verb':
-                        let verbFinded = verbsController.findByName(parameter)
-                        if(verbFinded) {
-                            parameters.verb = verbFinded
-                        }
-                        break
-                }
-            })
-            .replace(REGEXP_COLLECTION.NAMED_PARAMETER, (match, optional) => {
-                return optional ? match : '([^\\s]+)'
-            })
-
-        debugger
-
-    }
-
     whenMatch(match, callback) {
         this.getElementsToMatch().push(new elementMatcher(match))
         this.getCallbacks().push(callback)

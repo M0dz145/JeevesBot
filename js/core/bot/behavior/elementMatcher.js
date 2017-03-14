@@ -7,7 +7,13 @@ export default class elementMatcher {
         this.matchText = matchText
 
         this.parameters = {
-            verb: []
+            verb: [],
+            circumstantialComplement: {
+                place: [],
+                time: [],
+                way: []
+            },
+            namedParam: {}
         }
 
         this.init()
@@ -16,8 +22,8 @@ export default class elementMatcher {
     init() {
         logger.message('Search params from match: %c' + this.getMatchText())
         this.getMatchText()
+        // Types $
             .replace(REGEXP_COLLECTION.TYPED_PARAMETER, (match, type, parameter, offset, completeString) => {
-                debugger
                 switch(type) {
                     case 'verb':
                         let verbFinded = verbsController.findByName(parameter)
@@ -28,6 +34,19 @@ export default class elementMatcher {
                         logger.message('Finded from match: %cVERB ' + verbFinded.getVerbName())
                         break
                 }
+                debugger
+
+                return ''
+            })
+            .replace(REGEXP_COLLECTION.NAMED_PARAMETER, (match, optional, parameter, offset, completeString) => {
+                if(optional) {
+
+                }
+
+                this.getParameters().namedParam[parameter] = ''
+                debugger
+
+                return ''
             })
     }
 

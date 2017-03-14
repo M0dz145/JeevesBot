@@ -39,6 +39,7 @@ export default class speak {
 
         this.setIsAction(SPEAK.ACTION_VERB.test(this.getSpeak()))
 
+        // Recherche les verbes
         let speakVerbRegex = this.getIsAction() ? SPEAK.ACTION_VERB : SPEAK.VERB
         this.getSpeak().replace(speakVerbRegex, (match, $verb) => {
             let verb = verbsController.find($verb)
