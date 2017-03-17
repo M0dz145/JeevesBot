@@ -48,16 +48,6 @@ export default class verbsController {
             for(let categoryName in conjugatedTimes) { // indicatif...
                 for(let timeName in conjugatedTimes[categoryName]) { // present, future...
 
-                    // conjugatedTimes[categoryName][timeName].find(verbConjugated => {
-                    //     if(verbConjugated === verbToFind) {
-                    //         // Le verbe a été trouvé, on le renvoie directement
-                    //         verbConjugated.setIsConjugated({
-                    //             categoryName,
-                    //             timeName
-                    //         })
-                    //         return verbConjugated
-                    //     }
-                    // })
                     for(let i = 0; i < conjugatedTimes[categoryName][timeName].length; i++) { // iront...
                         let verbConjugated = conjugatedTimes[categoryName][timeName][i]
 

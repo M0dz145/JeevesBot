@@ -42,3 +42,11 @@ export const REGEXP_COLLECTION = {
 export const REGEXP_SYMBOLES = {
     ALTERNATION: '|'
 }
+
+export const ELEMENT_MATCHER = {
+    PARAMETERS: {
+        NAMED: ':',
+        TYPED: '$'
+    },
+    VERB: 'verb'
+}

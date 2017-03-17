@@ -1,4 +1,4 @@
-import {REGEXP_COLLECTION} from "../../constants/constants"
+import {REGEXP_COLLECTION, ELEMENT_MATCHER} from "../../constants/constants"
 import verbsController from "../speak/components/verbsController"
 import logger from "../../helpers/console/logger"
 
@@ -25,7 +25,7 @@ export default class elementMatcher {
         // Types $
             .replace(REGEXP_COLLECTION.TYPED_PARAMETER, (match, type, parameter, offset, completeString) => {
                 switch(type) {
-                    case 'verb':
+                    case ELEMENT_MATCHER.VERB:
                         let verbFinded = verbsController.findByName(parameter)
                         if(!verbFinded) {
                             throw 'Module error, aucun verbe trouvé lors du parse de l\'elementMatcher'
@@ -36,7 +36,7 @@ export default class elementMatcher {
                 }
                 debugger
 
-                return ''
+                return match
             })
             .replace(REGEXP_COLLECTION.NAMED_PARAMETER, (match, optional, parameter, offset, completeString) => {
                 if(optional) {
@@ -46,8 +46,15 @@ export default class elementMatcher {
                 this.getParameters().namedParam[parameter] = ''
                 debugger
 
-                return ''
+                return match
             })
+    }
+
+    static paramMatcher(name, typed = false) {
+        if(typed !== false) {
+            return typed + ELEMENT_MATCHER.PARAMETERS.TYPED + name
+        }
+        return ELEMENT_MATCHER.PARAMETERS.NAMED + name
     }
 
     getVerbs() {
