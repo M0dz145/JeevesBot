@@ -50,13 +50,6 @@ export default class elementMatcher {
             })
     }
 
-    static paramMatcher(name, typed = false) {
-        if(typed !== false) {
-            return typed + ELEMENT_MATCHER.PARAMETERS.TYPED + name
-        }
-        return ELEMENT_MATCHER.PARAMETERS.NAMED + name
-    }
-
     getVerbs() {
         return this.getParameters().verb
     }

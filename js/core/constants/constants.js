@@ -44,9 +44,5 @@ export const REGEXP_SYMBOLES = {
 }
 
 export const ELEMENT_MATCHER = {
-    PARAMETERS: {
-        NAMED: ':',
-        TYPED: '$'
-    },
     VERB: 'verb'
 }
